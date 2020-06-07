@@ -2,14 +2,18 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
-func whatthedrink(num int) {
-	if num == 2 {
-		fmt.Println("чй")
+func whatthedrink(num int) string {
+	if num%2 == 0 {
+		return "чй"
+	} else {
+		return "кф"
 	}
 }
 
 func main() {
-	fmt.Println(whatthedrink(2))
+	hours, minutes, seconds := time.Now().Clock()
+	fmt.Println(whatthedrink(hours + minutes + seconds - 5))
 }
