@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -26,7 +25,6 @@ func init() {
 
 func main() {
 	isLocal := os.Getenv("LOCAL_DRNKBOT_DEVELOPMENT")
-	fmt.Println(getweather())
 
 	if len(isLocal) == 0 {
 		lambda.Start(LambdaHandler)
@@ -81,7 +79,7 @@ func SendTelegramMessage(chatID int64) tgbotapi.Message {
 		),
 	)
 
-	msg := tgbotapi.NewMessage(chatID, whatthedrink())
+	msg := tgbotapi.NewMessage(chatID, whatthedrink()+"     🤍  в мск "+getweather())
 	msg.ReplyMarkup = keyboard
 	message, err := drnkbot.Send(msg)
 	if err != nil {
