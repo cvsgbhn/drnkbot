@@ -1,8 +1,11 @@
 package main
 
 import (
+	"fmt"
+	"io/ioutil"
 	"log"
 	"math/rand"
+	"net/http"
 	"os"
 	"strings"
 	"time"
@@ -23,6 +26,7 @@ func init() {
 
 func main() {
 	isLocal := os.Getenv("LOCAL_DRNKBOT_DEVELOPMENT")
+	fmt.Println(getweather())
 
 	if len(isLocal) == 0 {
 		lambda.Start(LambdaHandler)
@@ -30,7 +34,6 @@ func main() {
 	}
 	RecursiveFetchUpdatesAndRespond()
 }
-
 
 // RecursiveFetchUpdatesAndRespond рекурсивно cканирует новые сообщения из телеграма
 // Затем оно берет полученные сообщения и отправляет на них ответ
@@ -92,4 +95,22 @@ func whatthedrink() string {
 	opts := strings.Split("чй 🍵,кф ☕", ",")
 	rand.Seed(time.Now().UnixNano())
 	return opts[rand.Intn(len(opts))]
+}
+
+func getweather() string {
+	var bodyString string
+	resp, err := http.Get("http://wttr.in/SVO?format=1")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode == http.StatusOK {
+		bodyBytes, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+		bodyString = string(bodyBytes)
+	}
+	return bodyString
 }
