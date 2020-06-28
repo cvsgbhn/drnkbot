@@ -79,7 +79,7 @@ func SendTelegramMessage(chatID int64) tgbotapi.Message {
 		),
 	)
 
-	msg := tgbotapi.NewMessage(chatID, whatthedrink()+"     🤍  в мск "+getweather())
+	msg := tgbotapi.NewMessage(chatID, createmessage(whatthedrink(), getweather()))
 	msg.ReplyMarkup = keyboard
 	message, err := drnkbot.Send(msg)
 	if err != nil {
@@ -111,4 +111,14 @@ func getweather() string {
 		bodyString = string(bodyBytes)
 	}
 	return bodyString
+}
+
+func createmessage(drink string, weather string) string {
+	if len(drink) == 0 {
+		return "сам выбирай UwU 🤍  в мск " + weather
+	}
+	if len(weather) == 0 {
+		return drink + "🤍 у природы нет плохой погоды 🤍"
+	}
+	return drink + "     🤍  в мск " + weather
 }
