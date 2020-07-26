@@ -18,7 +18,7 @@ func whatthedrink() string {
 
 func getweather() string {
 	var bodyString string
-	resp, err := http.Get("http://wttr.in/SVO?format=1")
+	resp, err := http.Get("http://wttr.in/SVO?format=1&lang=ru")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -41,5 +41,5 @@ func createmessage(drink string, weather string) string {
 	if len(weather) == 0 {
 		return drink + "🤍 у природы нет плохой погоды 🤍"
 	}
-	return drink + "     🤍  в мск " + weather
+	return drink + "   ~🤍~  в мск " + weather
 }
