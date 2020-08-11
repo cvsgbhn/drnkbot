@@ -1,8 +1,7 @@
 ---
 name: Lint
-on:
-  push:
-  pull_request:
+# Trigger the workflow on push or pull request
+on: [pull_request]
 jobs:
   golangci:
     name: lint
