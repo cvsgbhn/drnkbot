@@ -18,7 +18,7 @@ func whatthedrink() string {
 
 func getweather() string {
 	var bodyString string
-	resp, err := http.Get("http://wttr.in/SVO?format=1&lang=ru")
+	resp, err := http.Get("http://wttr.in/Moscow?m&format=1&lang=ru")
 	if err != nil {
 		log.Fatal(err)
 	}
